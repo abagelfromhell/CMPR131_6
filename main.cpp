@@ -112,29 +112,41 @@ void nonTemplateSwitch()
 void templateSwitch()
 {
 	cout << "\n\t2> Template MyBag<double> container";
-
+	MyBag<double> numbersList;
 	do
 	{
 		switch (myBagMenu())
 		{
 		case 'A':
 		{
-
+			numbersList.clear();
+			cout << "\n\t\tMyBad is cleared of all elements.";
 			break;
 		}
 		case 'B':
 		{
-
+			double value = inputDouble("\n\t\tEnter a value and insert into MyBag: ");
+			numbersList.insert(value);
+			cout << "\n\t\t" << value << " has been inserted into MyBag.";
 			break;
 		}
 		case 'C':
 		{
-
+			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
+			int index = numbersList.search(value);
+			if (index != -1)
+			{
+				cout << "\n\t\tValue " << value << " is found at subscript #" << index << " from MyBag.";
+			}
+			else
+			{
+				cout << "\n\t\tValue " << value << " is not found from MyBag.";
+			}
 			break;
 		}
 		case 'D':
 		{
-
+			//index validation
 			break;
 		}
 		case 'E':
