@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -27,6 +26,25 @@ public:
 	void sortArray()
 	{
 		sort(array.begin(), array.end());
+	}
+	void insert(T value)
+	{
+		array.insert(value);
+	}
+	int search(T value)
+	{
+		for (int i = 0; i < array.size(); i++)
+		{
+			if (array[i] == value)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	void remove(int index)
+	{
+		array.erase(index);
 	}
 	void clear()
 	{
