@@ -132,6 +132,10 @@ void templateSwitch()
 		}
 		case 'C':
 		{
+			if(numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
 			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
 			int index = numbersList.search(value);
 			if (index != -1)
@@ -146,16 +150,35 @@ void templateSwitch()
 		}
 		case 'D':
 		{
-			//index validation
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			int index = inputInteger("\n\t\tEnter an index(subscript) from MyBag to be deleted: ", 0, numbersList.size());
+			cout << "\n\t\tValue " << numbersList.at(index) << " has been deleted from MyBag.";
+			numbersList.remove(index);
 			break;
 		}
 		case 'E':
 		{
-
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			numbersList.sortArray();
+			cout << "\n\t\tMybag contains these sorted integers: ";
+			numbersList.display();
 			break;
 		}
 		case 'F':
 		{
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			cout << "\n\t\tMybag contains these sorted integers: ";
+
+			numbersList.display();
 
 			break;
 		}
