@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -48,7 +47,7 @@ public:
 		}
 		return -1;
 	}
-	void remove(int index)	
+	void remove(int index)
 	{
 		int i = 0;
 		for (auto it = array.begin(); it != array.end(); it++)
@@ -73,5 +72,24 @@ public:
 	T at(int index)
 	{
 		return array[index];
+	}
+	MyBag operator =(const MyBag& a)
+	{
+		int thisSize = size();
+		int aSize = a.size();
+		if (thisSize < aSize)
+		{
+			for (int i = 0; i < thisSize; i++)
+			{
+				array[i] = a.array[i];
+			}
+		}
+		else if (aSize < thisSize)
+		{
+			for (int i = 0; i < aSize; i++)
+			{
+				array[i] = a.array[i];
+			}
+		}
 	}
 };
