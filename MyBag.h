@@ -1,255 +1,77 @@
+#pragma once
+#pragma once
 #include <iostream>
-#include "input.h"
-#include "MyBag.h"
-
+#include <algorithm>
+#include <vector>
 using namespace std;
-
-int menuOption();
-
-char myBagMenu();
-void nonTemplateSwitch();
-void templateSwitch();
-
-char applicationOfMenu();
-void applicationOfSwitch();
-
-int main()
-{
-	do
+template <class T>
+class MyBag {
+private:
+	vector<T> array;
+public:
+	MyBag()
 	{
-		switch (menuOption())
-		{
-		case 0: exit(1);
-		case 1: system("cls"); nonTemplateSwitch(); cout << "\n\t\t"; system("pause"); system("cls"); break;
-		case 2: system("cls"); templateSwitch(); cout << "\n\t\t"; system("pause"); system("cls"); break;
-		case 3: system("cls"); applicationOfSwitch(); cout << "\n\t\t"; system("pause"); system("cls"); break;
-		default: cout << "\nERROR: Invalid option.\n"; break;
-		}
-	} while (true);
-
-	return 0;
-}
-
-int menuOption()
-{
-	cout << "\n\tCMPR131 Chapter 6: non-template and template Container by Tiffany Nguyen and Albert Mondragon";
-	cout << "\n\t" << string(76, char(205));
-	cout << "\n\t\t1> Non-template MyBag container of int";
-	cout << "\n\t\t2> Template MyBag<double> container";
-	cout << "\n\t\t3> Application using MyBag container";
-	cout << "\n\t" << string(76, char(196));
-	cout << "\n\t\t0> Exit";
-	cout << "\n\t" << string(76, char(205));
-	return inputInteger("\n\t\tOption: ", 0, 3);
-}
-
-char myBagMenu()
-{
-	cout << "\n\t" << string(76, char(205));
-	cout << "\n\t\tA> clear";
-	cout << "\n\t\tB> insert";
-	cout << "\n\t\tC> search";
-	cout << "\n\t\tD> remove";
-	cout << "\n\t\tE> sort";
-	cout << "\n\t\tF> display";
-	cout << "\n\t" << string(76, char(196));
-	cout << "\n\t\t0> Exit";
-	cout << "\n\t" << string(76, char(205));
-	return inputChar("\n\t\tOption: ");
-}
-
-void nonTemplateSwitch()
-{
-	cout << "\n\t1> Non-template MyBag of integers ";
-
-	do
+		array.clear();
+	}
+	bool empty()
 	{
-		switch (myBagMenu())
-		{
-		case 'A':
-		{
-
-			break;
-		}
-		case 'B':
-		{
-
-			break;
-		}
-		case 'C':
-		{
-
-			break;
-		}
-		case 'D':
-		{
-			
-			break;
-		}
-		case 'E':
-		{
-			
-			break;
-		}
-		case 'F':
-		{
-		
-			break;
-		}
-		case '0':
-		{
-			return;
-		}
-		default:
-		{
-			cout << "\n\t\t\tERROR: Invalid option.\n\t";
-			break;
-		}
-		}
-	} while (true);
-}
-
-void templateSwitch()
-{
-	cout << "\n\t2> Template MyBag<double> container";
-	MyBag<double> numbersList;
-	do
+		return array.empty();
+	}
+	MyBag(T* a, int newSize)
 	{
-		switch (myBagMenu())
-		{
-		case 'A':
-		{
-			numbersList.clear();
-			cout << "\n\t\tMyBad is cleared of all elements.";
-			break;
-		}
-		case 'B':
-		{
-			double value = inputDouble("\n\t\tEnter a value and insert into MyBag: ");
-			numbersList.insert(value);
-			cout << "\n\t\t" << value << " has been inserted into MyBag.";
-			break;
-		}
-		case 'C':
-		{
-			if(numbersList.empty())
-			{
-				cout << "\n\t\tMyBag is empty.";
-			}
-			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
-			int index = numbersList.search(value);
-			if (index != -1)
-			{
-				cout << "\n\t\tValue " << value << " is found at subscript #" << index << " from MyBag.";
-			}
-			else
-			{
-				cout << "\n\t\tValue " << value << " is not found from MyBag.";
-			}
-			break;
-		}
-		case 'D':
-		{
-			if (numbersList.empty())
-			{
-				cout << "\n\t\tMyBag is empty.";
-			}
-			int index = inputInteger("\n\t\tEnter an index(subscript) from MyBag to be deleted: ", 0, numbersList.size());
-			cout << "\n\t\tValue " << numbersList.at(index) << " has been deleted from MyBag.";
-			numbersList.remove(index);
-			break;
-		}
-		case 'E':
-		{
-			if (numbersList.empty())
-			{
-				cout << "\n\t\tMyBag is empty.";
-			}
-			numbersList.sortArray();
-			cout << "\n\t\tMybag contains these sorted integers: ";
-			numbersList.display();
-			break;
-		}
-		case 'F':
-		{
-			if (numbersList.empty())
-			{
-				cout << "\n\t\tMyBag is empty.";
-			}
-			cout << "\n\t\tMybag contains these sorted integers: ";
-
-			numbersList.display();
-
-			break;
-		}
-		case '0':
-		{
-			return;
-		}
-		default:
-		{
-			cout << "\n\t\t\tERROR: Invalid option.\n\t";
-			break;
-		}
-		}
-	} while (true);
-}
-
-char applicationOfMenu()
-{
-	cout << "\n\t3> Courses using MyBags of integers, strings, doubles, and chars";
-	cout << "\n\t" << string(76, char(205));
-	cout << "\n\t\tA> Specify the number of courses";
-	cout << "\n\t\tB> Read in data file and insert into courses";
-	cout << "\n\t\tC> Search for a student record from a course";
-	cout << "\n\t\tD> Remove a student record from a course";
-	cout << "\n\t\tE> Display course(s)";
-	cout << "\n\t" << string(76, char(196));
-	cout << "\n\t\t0> Exit";
-	cout << "\n\t" << string(76, char(205));
-	return inputChar("\n\t\tOption: ");
-}
-
-void applicationOfSwitch()
-{
-	do
+		array.resize(newSize);
+		for (int i = 0; i < array.size(); i++)
+			array[i] = a[i];
+	}
+	void display() const
 	{
-		switch (applicationOfMenu())
+		cout << "\n";
+		for (int i = 0; i < array.size(); i++)
+			cout << "\t\t\t[" << i << "] - " << array[i] << '\n';
+	}
+	void sortArray()
+	{
+		sort(array.begin(), array.end());
+	}
+	void insert(T value)
+	{
+		array.push_back(value);
+	}
+	int search(T value)
+	{
+		for (int i = 0; i < array.size(); i++)
 		{
-		case 'A':
+			if (array[i] == value)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	void remove(int index)	
+	{
+		int i = 0;
+		for (auto it = array.begin(); it != array.end(); it++)
 		{
-
-			break;
+			i++;
+			if (i == index)
+			{
+				array.erase(it);
+				return;
+			}
 		}
-		case 'B':
-		{
-
-			break;
-		}
-		case 'C':
-		{
-
-			break;
-		}
-		case 'D':
-		{
-
-			break;
-		}
-		case 'E':
-		{
-
-			break;
-		}
-		case '0':
-		{
-			return;
-		}
-		default:
-		{
-			cout << "\n\t\t\tERROR: Invalid option.\n\t";
-			break;
-		}
-		}
-	} while (true);
-}
+	}
+	void clear()
+	{
+		array.clear();
+	}
+	int size()
+	{
+		int size = array.size();
+		return size;
+	}
+	T at(int index)
+	{
+		return array[index];
+	}
+};
