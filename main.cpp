@@ -15,11 +15,22 @@ void templateSwitch();
 char applicationOfMenu();
 void applicationOfSwitch();
 
-void readCoursesFile(MyBag<Course>& courseList, int i);
-void searchBag(MyBag<Course> courseList);
-void displayBag(MyBag<Course> courseList);
 int displayBagMenu(MyBag<Course> courseList);
 int searchBagMenu();
+int removeMenu(MyBag<Course> courseList);
+
+//Preconditions : courseList must have elements to change, i should be the index for Course element
+//Postconditions: will open user designated file and read records into MyBag<Course> courseList
+void readCoursesFile(MyBag<Course>& courseList, int i);
+//Preconditions : courseList must have elements with initialized values
+//Postconditions: will search for Course element matching name or ID entered by user
+void searchBag(MyBag<Course> courseList);
+//Preconditions : courseList must have elements with initialized values
+//Postconditions: will display courseList elements
+void displayBag(MyBag<Course> courseList);
+//Preconditions : courseList must have elements with initialized values
+//Postconditions: will remove element matching user input ID
+void removeBag(MyBag<Course>& courseList);
 
 int main()
 {
@@ -235,6 +246,12 @@ void applicationOfSwitch()
 		}
 		case 'B':
 		{
+			if (courseList.size() == 0)
+			{
+				cout << "\n\t\tERROR: Number of courses has not been assigned.";
+				cout << "\n";
+				break;
+			}
 			for (int i = 0; i < courseList.size(); i++)
 			{
 				readCoursesFile(courseList, i);
@@ -243,16 +260,34 @@ void applicationOfSwitch()
 		}
 		case 'C':
 		{
+			if (courseList.size() == 0)
+			{
+				cout << "\n\t\tERROR: MyBag is empty.";
+				cout << "\n";
+				break;
+			}
 			searchBag(courseList);
 			break;
 		}
 		case 'D':
 		{
-
+			if (courseList.size() == 0)
+			{
+				cout << "\n\t\tERROR: MyBag is empty.";
+				cout << "\n";
+				break;
+			}
+			removeBag(courseList);
 			break;
 		}
 		case 'E':
 		{
+			if (courseList.size() == 0)
+			{
+				cout << "\n\t\tERROR: MyBag is empty.";
+				cout << "\n";
+				break;
+			}
 			displayBag(courseList);
 			break;
 		}
@@ -415,7 +450,7 @@ int displayBagMenu(MyBag<Course> courseList)
 	cout << "\n\t\t 4. All";
 	cout << "\n\t\t 0. Return";
 	cout << "\n\t\t" << string(76, char(205));
-	return inputInteger("\n\t\tOption: ", 0, courseList.size());
+	return inputInteger("\n\t\tOption: ", 0, 4);
 }
 
 void displayBag(MyBag<Course> courseList)
@@ -426,6 +461,11 @@ void displayBag(MyBag<Course> courseList)
 		{
 		case 1:
 		{
+			if (courseList.size() < 1)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}
 			Course holder;
 			holder = courseList.at(0);
 			holder.display();
@@ -433,6 +473,11 @@ void displayBag(MyBag<Course> courseList)
 		}
 		case 2:
 		{
+			if (courseList.size() < 2)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}
 			Course holder;
 			holder = courseList.at(1);
 			holder.display();
@@ -441,6 +486,11 @@ void displayBag(MyBag<Course> courseList)
 
 		case 3:
 		{
+			if (courseList.size() < 3)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}
 			Course holder;
 			holder = courseList.at(2);
 			holder.display();
@@ -475,43 +525,47 @@ int removeMenu(MyBag<Course> courseList)
 	}
 	cout << "\n\t\t 0. Return";
 	cout << "\n\t\t" << string(76, char(205));
-	return inputInteger("\n\t\tOption: ", 0, courseList.size());
+	return inputInteger("\n\t\tOption: ", 0, 4);
 }
 
 void removeBag(MyBag<Course>& courseList)
 {
 	do
 	{
-		switch (displayBagMenu(courseList))
+		switch (removeMenu(courseList))
 		{
 		case 1:
 		{
-			bool found = false;
-			int index = -1;
-			int courseNumber = -1;
+			if (courseList.size() < 1)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}			
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
-			for (int i = 0; i < courseList.size(); i++)
+			int index = courseList.at(0).getIDBag().search(searchThis);
+			if (index != -1)
 			{
-				index = ((courseList.at(i)).getIDBag()).search(searchThis);
-				if (index != -1)
-				{
-					courseNumber = i;
-					found = true;
-				}
-			}
-			if (found)
-			{
-				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
-				courseList.remove(index);
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
+				courseList.at(0).getIDBag().remove(index);
+				courseList.at(0).getStudentNames().remove(index);
+				courseList.at(0).getStudentScores().remove(index);
+				courseList.at(0).getStudentGrades().remove(index);
+				courseList.at(0).display();
 			}
 			else
 			{
 				cout << "\t\tNo student ID: " << searchThis << " found.";
 			}
+			cout << "\n";
 			break;
 		}
 		case 2:
 		{
+			if (courseList.size() < 2)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}
 			bool found = false;
 			int index = -1;
 			int courseNumber = -1;
@@ -534,11 +588,18 @@ void removeBag(MyBag<Course>& courseList)
 			{
 				cout << "\t\tNo student ID: " << searchThis << " found.";
 			}
+			cout << "\n";
+
 			break;
 		}
 
 		case 3:
 		{
+			if (courseList.size() < 3)
+			{
+				cout << "\n\t\tElement does not exist.";
+				break;
+			}
 			bool found = false;
 			int index = -1;
 			int courseNumber = -1;
@@ -561,6 +622,8 @@ void removeBag(MyBag<Course>& courseList)
 			{
 				cout << "\t\tNo student ID: " << searchThis << " found.";
 			}
+			cout << "\n";
+
 			break;
 		}
 		case 0:
