@@ -1,6 +1,11 @@
+// Names: Tiffany Nguyen and Albert Mondragon
+// Date: 10/12/22
+// Description: CMPR131: Assignment 6
+
 #include <iostream>
 #include "input.h"
 #include "MyBag.h"
+#include "MyBagNonTemplate.h"
 #include "Course.h"
 #include <fstream>
 
@@ -80,6 +85,7 @@ char myBagMenu()
 void nonTemplateSwitch()
 {
 	cout << "\n\t1> Non-template MyBag of integers ";
+	MyBag2 numbersList;
 
 	do
 	{
@@ -87,31 +93,72 @@ void nonTemplateSwitch()
 		{
 		case 'A':
 		{
-
+			numbersList.clear();
+			cout << "\n\t\tMyBad is cleared of all elements.";
 			break;
 		}
 		case 'B':
 		{
-
+			double value = inputDouble("\n\t\tEnter a value and insert into MyBag: ");
+			numbersList.insert(value);
+			cout << "\n\t\t" << value << " has been inserted into MyBag.";
 			break;
 		}
 		case 'C':
 		{
-
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
+			int index = numbersList.search(value);
+			if (index != -1)
+			{
+				cout << "\n\t\tValue " << value << " is found at subscript #" << index << " from MyBag.";
+			}
+			else
+			{
+				cout << "\n\t\tValue " << value << " is not found from MyBag.";
+			}
 			break;
 		}
 		case 'D':
 		{
-
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			int index = inputInteger("\n\t\tEnter an index(subscript) from MyBag to be deleted: ", 0, numbersList.size());
+			cout << "\n\t\tValue " << numbersList.at(index) << " has been deleted from MyBag.";
+			numbersList.remove(index);
 			break;
 		}
 		case 'E':
 		{
-
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			else
+			{
+				numbersList.sortArray();
+				cout << "\n\t\tMybag contains these sorted integers: ";
+				numbersList.display();
+			}
+			
 			break;
 		}
 		case 'F':
 		{
+			if (numbersList.empty())
+			{
+				cout << "\n\t\tMyBag is empty.";
+			}
+			else
+			{
+				cout << "\n\t\tMybag contains these integers: ";
+				numbersList.display();
+			}
 
 			break;
 		}
@@ -184,9 +231,13 @@ void templateSwitch()
 			{
 				cout << "\n\t\tMyBag is empty.";
 			}
-			numbersList.sortArray();
-			cout << "\n\t\tMybag contains these sorted integers: ";
-			numbersList.display();
+			else
+			{
+				numbersList.sortArray();
+				cout << "\n\t\tMybag contains these sorted doubles: ";
+				numbersList.display();
+			}
+			
 			break;
 		}
 		case 'F':
@@ -195,10 +246,11 @@ void templateSwitch()
 			{
 				cout << "\n\t\tMyBag is empty.";
 			}
-			cout << "\n\t\tMybag contains these sorted integers: ";
-
-			numbersList.display();
-
+			else
+			{
+				cout << "\n\t\tMybag contains these doubles: ";
+				numbersList.display();
+			}
 			break;
 		}
 		case '0':
@@ -228,7 +280,6 @@ char applicationOfMenu()
 	cout << "\n\t" << string(76, char(205));
 	return inputChar("\n\t\tOption: ");
 }
-
 void applicationOfSwitch()
 {
 	MyBag<Course> courseList;
@@ -328,13 +379,13 @@ void readCoursesFile(MyBag<Course>& courseList, int i)
 			Course holder(1);
 			string textHolder;
 
-			getline(file, textHolder);	
+			getline(file, textHolder);
 			holder.setCourseName(textHolder);
 			textHolder.clear();
 
 			while (file.peek() != EOF)
 			{
-				
+
 				getline(file, textHolder, ',');
 				holder.addID(stoi(textHolder));
 				textHolder.clear();
@@ -353,7 +404,7 @@ void readCoursesFile(MyBag<Course>& courseList, int i)
 			courseList.setArrayIndex(i, holder);
 		}
 		file.close();
-		cout << "\n\t\tData from file, " << fileName <<" , has been read and stored into Courses[" << i << "].\n";
+		cout << "\n\t\tData from file, " << fileName << " , has been read and stored into Courses[" << i << "].\n";
 	} while (!read);
 }
 
@@ -370,7 +421,7 @@ int searchBagMenu()
 
 void searchBag(MyBag<Course> courseList)
 {
-	
+
 	do
 	{
 		switch (searchBagMenu())
@@ -407,7 +458,7 @@ void searchBag(MyBag<Course> courseList)
 			bool found = false;
 			int index = -1;
 			int courseNumber = -1;
-			
+
 			string userInput = inputString("\n\t\tEnter a student name to search: ", true);
 			string searchThis = " " + userInput;
 			for (int i = 0; i < courseList.size(); i++)
@@ -540,7 +591,7 @@ void removeBag(MyBag<Course>& courseList)
 			{
 				cout << "\n\t\tElement does not exist.";
 				break;
-			}			
+			}
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
 			int index = courseList.at(0).getIDBag().search(searchThis);
 			if (index != -1)
