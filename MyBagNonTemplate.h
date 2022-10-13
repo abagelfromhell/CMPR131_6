@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 	class MyBag2 {
 	private:
 		vector<int> array;
@@ -107,7 +106,7 @@ using namespace std;
 		{
 			array[index] = value;
 		}
-		//Preconditions: a must be MyBag2 
+		//Preconditions: a must be MyBag2
 		//Postconditions: copies a to the array
 		const MyBag2 operator =(const MyBag2& a)
 		{
