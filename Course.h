@@ -229,6 +229,15 @@ public:
 		cout << "\n";
 
 	}
+	//Preconditions : index must be in a valid element index in MyBag container
+	//Postconditions: will remove element at index
+	void remove(int index)
+	{
+		studentID.remove(index);
+		studentNames.remove(index);
+		studentScores.remove(index);
+		studentGrades.remove(index);
+	}
 
 };
 
