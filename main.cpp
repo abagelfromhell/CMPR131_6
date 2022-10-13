@@ -546,11 +546,8 @@ void removeBag(MyBag<Course>& courseList)
 			if (index != -1)
 			{
 				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
-				courseList.at(0).getIDBag().remove(index);
-				courseList.at(0).getStudentNames().remove(index);
-				courseList.at(0).getStudentScores().remove(index);
-				courseList.at(0).getStudentGrades().remove(index);
-				courseList.at(0).display();
+				courseList.at(0).remove(index);
+
 			}
 			else
 			{
@@ -566,30 +563,19 @@ void removeBag(MyBag<Course>& courseList)
 				cout << "\n\t\tElement does not exist.";
 				break;
 			}
-			bool found = false;
-			int index = -1;
-			int courseNumber = -1;
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
-			for (int i = 0; i < courseList.size(); i++)
+			int index = courseList.at(1).getIDBag().search(searchThis);
+			if (index != -1)
 			{
-				index = ((courseList.at(i)).getIDBag()).search(searchThis);
-				if (index != -1)
-				{
-					courseNumber = i;
-					found = true;
-				}
-			}
-			if (found)
-			{
-				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
-				courseList.remove(index);
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
+				courseList.at(1).remove(index);
+
 			}
 			else
 			{
 				cout << "\t\tNo student ID: " << searchThis << " found.";
 			}
 			cout << "\n";
-
 			break;
 		}
 
@@ -600,30 +586,19 @@ void removeBag(MyBag<Course>& courseList)
 				cout << "\n\t\tElement does not exist.";
 				break;
 			}
-			bool found = false;
-			int index = -1;
-			int courseNumber = -1;
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
-			for (int i = 0; i < courseList.size(); i++)
+			int index = courseList.at(2).getIDBag().search(searchThis);
+			if (index != -1)
 			{
-				index = ((courseList.at(i)).getIDBag()).search(searchThis);
-				if (index != -1)
-				{
-					courseNumber = i;
-					found = true;
-				}
-			}
-			if (found)
-			{
-				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
-				courseList.remove(index);
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
+				courseList.at(2).remove(index);
+
 			}
 			else
 			{
 				cout << "\t\tNo student ID: " << searchThis << " found.";
 			}
 			cout << "\n";
-
 			break;
 		}
 		case 0:
