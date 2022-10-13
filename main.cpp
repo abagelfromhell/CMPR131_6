@@ -1,6 +1,8 @@
 #include <iostream>
 #include "input.h"
 #include "MyBag.h"
+#include "Course.h"
+#include <fstream>
 
 using namespace std;
 
@@ -12,6 +14,12 @@ void templateSwitch();
 
 char applicationOfMenu();
 void applicationOfSwitch();
+
+void readCoursesFile(MyBag<Course>& courseList, int i);
+void searchBag(MyBag<Course> courseList);
+void displayBag(MyBag<Course> courseList);
+int displayBagMenu(MyBag<Course> courseList);
+int searchBagMenu();
 
 int main()
 {
@@ -83,17 +91,17 @@ void nonTemplateSwitch()
 		}
 		case 'D':
 		{
-			
+
 			break;
 		}
 		case 'E':
 		{
-			
+
 			break;
 		}
 		case 'F':
 		{
-		
+
 			break;
 		}
 		case '0':
@@ -132,7 +140,7 @@ void templateSwitch()
 		}
 		case 'C':
 		{
-			if(numbersList.empty())
+			if (numbersList.empty())
 			{
 				cout << "\n\t\tMyBag is empty.";
 			}
@@ -212,23 +220,30 @@ char applicationOfMenu()
 
 void applicationOfSwitch()
 {
+	MyBag<Course> courseList;
 	do
 	{
 		switch (applicationOfMenu())
 		{
 		case 'A':
 		{
-
+			Course initializer;
+			int numberOfCourses = inputInteger("\n\t\t1> Enter the number of courses: ");
+			courseList.resize(initializer, numberOfCourses);
+			cout << "\n\t\t" << numberOfCourses << " Course(s) has been created.\n";
 			break;
 		}
 		case 'B':
 		{
-
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				readCoursesFile(courseList, i);
+			}
 			break;
 		}
 		case 'C':
 		{
-
+			searchBag(courseList);
 			break;
 		}
 		case 'D':
@@ -238,7 +253,7 @@ void applicationOfSwitch()
 		}
 		case 'E':
 		{
-
+			displayBag(courseList);
 			break;
 		}
 		case '0':
@@ -250,6 +265,309 @@ void applicationOfSwitch()
 			cout << "\n\t\t\tERROR: Invalid option.\n\t";
 			break;
 		}
+		}
+	} while (true);
+}
+
+void readCoursesFile(MyBag<Course>& courseList, int i)
+{
+	bool read = false;
+	do
+	{
+		fstream file;
+		string fileName = inputString("\n\t\t2> Enter a data file name for course[" + to_string(i) + "] (STOP - return): ", true);
+		if (fileName == "STOP")
+		{
+			cout << "\n\t\tFile reading has stopped.";
+			system("pause");
+			return;
+		}
+		file.open(fileName, ios::in || ios::beg);
+		if ((file.fail()))
+		{
+			cout << "\n\t\tERROR: File, " << fileName << ", cannot be found. Please re-sepecify.\n\t\t";
+			continue;
+		}
+		else
+		{
+			Course holder(1);
+			string textHolder;
+
+			getline(file, textHolder);	
+			holder.setCourseName(textHolder);
+			textHolder.clear();
+
+			while (file.peek() != EOF)
+			{
+				
+				getline(file, textHolder, ',');
+				holder.addID(stoi(textHolder));
+				textHolder.clear();
+
+				getline(file, textHolder, ',');
+				holder.addName(textHolder);
+				textHolder.clear();
+
+				getline(file, textHolder);
+				holder.addScore(stod(textHolder));
+				holder.setGradeLevel(stod(textHolder));
+				textHolder.clear();
+
+				read = true;
+			}
+			courseList.setArrayIndex(i, holder);
+		}
+		file.close();
+		cout << "\n\t\tData from file, " << fileName <<" , has been read and stored into Courses[" << i << "].\n";
+	} while (!read);
+}
+
+int searchBagMenu()
+{
+	cout << "\n\t\tC> Search By";
+	cout << "\n\t\t" << string(76, char(205));
+	cout << "\n\t\t\t1. ID Number";
+	cout << "\n\t\t\t2. Name";
+	cout << "\n\t\t\t0. Return";
+	cout << "\n\t\t" << string(76, char(205));
+	return inputInteger("\n\t\t\tOption: ", 0, 2);
+}
+
+void searchBag(MyBag<Course> courseList)
+{
+	
+	do
+	{
+		switch (searchBagMenu())
+		{
+		case 1:
+		{
+			bool found = false;
+			int index = -1;
+			int courseNumber = -1;
+			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				index = ((courseList.at(i)).getIDBag()).search(searchThis);
+				if (index != -1)
+				{
+					courseNumber = i;
+					found = true;
+				}
+			}
+			if (found)
+			{
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName();
+
+			}
+			else
+			{
+				cout << "\t\tNo student ID: " << searchThis << " found.";
+			}
+			cout << "\n";
+			break;
+		}
+		case 2:
+		{
+			bool found = false;
+			int index = -1;
+			int courseNumber = -1;
+			
+			string userInput = inputString("\n\t\tEnter a student name to search: ", true);
+			string searchThis = " " + userInput;
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				index = ((courseList.at(i)).getStudentNames()).search(searchThis);
+				if (index != -1)
+				{
+					courseNumber = i;
+					found = true;
+				}
+			}
+			if (found)
+			{
+				cout << "\t\tName: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName();
+
+			}
+			else
+			{
+				cout << "\t\tNo student name: " << searchThis << " found.";
+			}
+			cout << "\n";
+			break;
+		}
+		case 0:
+			return;
+		default:
+			cout << "\n\t\tERROR: Invalid input.";
+		}
+	} while (true);
+}
+
+int displayBagMenu(MyBag<Course> courseList)
+{
+	cout << "\n\t\tCourse(s)";
+	cout << "\n\t\t" << string(76, char(205));
+	for (int i = 0; i < courseList.size(); i++)
+	{
+		cout << "\n\t\t " << i + 1 << ". " << (courseList.at(i)).getCourseName();
+	}
+	cout << "\n\t\t 4. All";
+	cout << "\n\t\t 0. Return";
+	cout << "\n\t\t" << string(76, char(205));
+	return inputInteger("\n\t\tOption: ", 0, courseList.size());
+}
+
+void displayBag(MyBag<Course> courseList)
+{
+	do
+	{
+		switch (displayBagMenu(courseList))
+		{
+		case 1:
+		{
+			Course holder;
+			holder = courseList.at(0);
+			holder.display();
+			break;
+		}
+		case 2:
+		{
+			Course holder;
+			holder = courseList.at(1);
+			holder.display();
+			break;
+		}
+
+		case 3:
+		{
+			Course holder;
+			holder = courseList.at(2);
+			holder.display();
+			break;
+		}
+
+		case 4:
+		{
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				courseList.at(i).display();
+			}
+			break;
+		}
+
+		case 0:
+			return;
+		default:
+			cout << "\n\t\tERROR: Invalid input.";
+			break;
+		}
+	} while (true);
+}
+
+int removeMenu(MyBag<Course> courseList)
+{
+	cout << "\n\t\t4> Course(s)";
+	cout << "\n\t\t" << string(76, char(205));
+	for (int i = 0; i < courseList.size(); i++)
+	{
+		cout << "\n\t\t " << i + 1 << ". " << (courseList.at(i)).getCourseName();
+	}
+	cout << "\n\t\t 0. Return";
+	cout << "\n\t\t" << string(76, char(205));
+	return inputInteger("\n\t\tOption: ", 0, courseList.size());
+}
+
+void removeBag(MyBag<Course>& courseList)
+{
+	do
+	{
+		switch (displayBagMenu(courseList))
+		{
+		case 1:
+		{
+			bool found = false;
+			int index = -1;
+			int courseNumber = -1;
+			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				index = ((courseList.at(i)).getIDBag()).search(searchThis);
+				if (index != -1)
+				{
+					courseNumber = i;
+					found = true;
+				}
+			}
+			if (found)
+			{
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
+				courseList.remove(index);
+			}
+			else
+			{
+				cout << "\t\tNo student ID: " << searchThis << " found.";
+			}
+			break;
+		}
+		case 2:
+		{
+			bool found = false;
+			int index = -1;
+			int courseNumber = -1;
+			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				index = ((courseList.at(i)).getIDBag()).search(searchThis);
+				if (index != -1)
+				{
+					courseNumber = i;
+					found = true;
+				}
+			}
+			if (found)
+			{
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
+				courseList.remove(index);
+			}
+			else
+			{
+				cout << "\t\tNo student ID: " << searchThis << " found.";
+			}
+			break;
+		}
+
+		case 3:
+		{
+			bool found = false;
+			int index = -1;
+			int courseNumber = -1;
+			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
+			for (int i = 0; i < courseList.size(); i++)
+			{
+				index = ((courseList.at(i)).getIDBag()).search(searchThis);
+				if (index != -1)
+				{
+					courseNumber = i;
+					found = true;
+				}
+			}
+			if (found)
+			{
+				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(courseNumber)).getCourseName() << " and has been removed.";
+				courseList.remove(index);
+			}
+			else
+			{
+				cout << "\t\tNo student ID: " << searchThis << " found.";
+			}
+			break;
+		}
+		case 0:
+			return;
+		default:
+			cout << "\n\t\tERROR: Invalid input.";
+			break;
 		}
 	} while (true);
 }
