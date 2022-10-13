@@ -22,6 +22,13 @@ public:
 		for (int i = 0; i < array.size(); i++)
 			array[i] = a[i];
 	}
+	void resize(T a, int newSize)
+	{
+		array.resize(newSize);
+		for (int i = 0; i < array.size(); i++)
+			array[i] = a;
+	
+	}
 	void display() const
 	{
 		cout << "\n";
@@ -73,23 +80,18 @@ public:
 	{
 		return array[index];
 	}
-	MyBag operator =(const MyBag& a)
+	void setArrayIndex(int index, T value)
 	{
-		int thisSize = size();
-		int aSize = a.size();
-		if (thisSize < aSize)
-		{
-			for (int i = 0; i < thisSize; i++)
-			{
-				array[i] = a.array[i];
-			}
-		}
-		else if (aSize < thisSize)
-		{
-			for (int i = 0; i < aSize; i++)
-			{
-				array[i] = a.array[i];
-			}
-		}
+		array[index] = value;
 	}
+	const MyBag operator =(const MyBag& a)
+	{
+		array.resize(a.array.size());
+		for (int i = 0; i < a.array.size(); i++)
+		{
+			array[i] = a.array[i];
+		}
+		return *this;
+	}
+
 };
