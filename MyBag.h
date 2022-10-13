@@ -62,6 +62,7 @@ public:
 			i++;
 			if (i == index)
 			{
+			
 				array.erase(it);
 				return;
 			}
