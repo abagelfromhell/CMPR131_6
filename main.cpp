@@ -94,7 +94,7 @@ void nonTemplateSwitch()
 		case 'A':
 		{
 			numbersList.clear();
-			cout << "\n\t\tMyBad is cleared of all elements.";
+			cout << "\n\t\tMyBag is cleared of all elements.";
 			break;
 		}
 		case 'B':
@@ -109,6 +109,7 @@ void nonTemplateSwitch()
 			if (numbersList.empty())
 			{
 				cout << "\n\t\tMyBag is empty.";
+				break;
 			}
 			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
 			int index = numbersList.search(value);
@@ -127,6 +128,7 @@ void nonTemplateSwitch()
 			if (numbersList.empty())
 			{
 				cout << "\n\t\tMyBag is empty.";
+				break;
 			}
 			int index = inputInteger("\n\t\tEnter an index(subscript) from MyBag to be deleted: ", 0, numbersList.size());
 			cout << "\n\t\tValue " << numbersList.at(index) << " has been deleted from MyBag.";
@@ -201,6 +203,7 @@ void templateSwitch()
 			if (numbersList.empty())
 			{
 				cout << "\n\t\tMyBag is empty.";
+				break;
 			}
 			double value = inputDouble("\n\t\tEnter a value to search from MyBag: ");
 			int index = numbersList.search(value);
@@ -219,6 +222,7 @@ void templateSwitch()
 			if (numbersList.empty())
 			{
 				cout << "\n\t\tMyBag is empty.";
+				break;
 			}
 			int index = inputInteger("\n\t\tEnter an index(subscript) from MyBag to be deleted: ", 0, numbersList.size());
 			cout << "\n\t\tValue " << numbersList.at(index) << " has been deleted from MyBag.";
