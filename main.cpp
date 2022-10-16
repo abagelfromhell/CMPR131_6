@@ -598,7 +598,6 @@ void removeBag(MyBag<Course>& courseList)
 			}
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
 			int index = courseList.at(0).getIDBag().search(searchThis);
-			cout << index;
 			if (index != -1)
 			{
 				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
