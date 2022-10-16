@@ -102,6 +102,10 @@ namespace templateVersion
 		{
 			return array[index];
 		}
+		T &atR(int index)
+		{
+			return array[index];
+		}
 		//Preconditions: index must be in bounds, value must be a valid data type
 		//Postconditions: sets the value at the index 
 		void setArrayIndex(int index, T value)
