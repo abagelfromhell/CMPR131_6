@@ -102,6 +102,8 @@ namespace templateVersion
 		{
 			return array[index];
 		}
+		//Preconditions: index must be in bounds
+		//Postconditions: returns a reference to the element at the index
 		T &atR(int index)
 		{
 			return array[index];
