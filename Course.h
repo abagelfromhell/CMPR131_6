@@ -6,6 +6,8 @@
 #include <iomanip>
 using namespace std;
 
+using namespace templateVersion;
+
 class Course
 {
 private:
@@ -30,7 +32,7 @@ public:
 	//Postconditions: N/A
 	Course(int foo)
 	{
-		
+
 	}
 	//Preconditions : newCourseName must be initialized
 	//Postconditions: newCourseName will be copied to courseName 
@@ -43,7 +45,7 @@ public:
 	string getCourseName()
 	{
 		return courseName;
-	} 
+	}
 	//Preconditions : newIDBag must be MyBag<int> container
 	//Postconditions: will copy newIDBag to studentID
 	void setIDBag(MyBag<int> newIDBag)
@@ -125,13 +127,13 @@ public:
 	//Postconditions: member variables will be set equal to Course a
 	const Course operator =(const Course& a)
 	{
-		
+
 		courseName = a.courseName;
 		studentID = a.studentID;
 		studentNames = a.studentNames;
 		studentScores = a.studentScores;
 		studentGrades = a.studentGrades;
-		
+
 		return *this;
 	}
 	//Preconditions : newID must be initialized
@@ -179,13 +181,18 @@ public:
 		setGradeLevel(stod(holder));
 		holder.clear();
 
-		
+
 
 	}
 	//Preconditions : Course must have initialized values
 	//Postconditions: Will display course member values
 	void display()
 	{
+		if (studentID.size() == 0)
+		{
+			cout << "\n\t\t"<< courseName <<" has no student records.";
+			return;
+		}
 		cout << "\n\t\t" << courseName;
 		cout << "\n\t\tIndex    StudentID                      Name    Score   Grade   ";
 		for (int i = 0; i < studentID.size(); i++)
@@ -233,12 +240,12 @@ public:
 	//Postconditions: will remove element at index
 	void remove(int index)
 	{
+
 		studentID.remove(index);
 		studentNames.remove(index);
 		studentScores.remove(index);
 		studentGrades.remove(index);
 	}
-
 };
 
 
