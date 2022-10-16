@@ -5,7 +5,6 @@
 #include <iostream>
 #include "input.h"
 #include "MyBag.h"
-#include "MyBagNonTemplate.h"
 #include "Course.h"
 #include <fstream>
 
@@ -84,8 +83,10 @@ char myBagMenu()
 
 void nonTemplateSwitch()
 {
+	
 	cout << "\n\t1> Non-template MyBag of integers ";
-	MyBag2 numbersList;
+	nonTemplateVersion::MyBag numbersList;
+
 
 	do
 	{
