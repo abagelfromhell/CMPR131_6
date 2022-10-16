@@ -87,7 +87,6 @@ void nonTemplateSwitch()
 	cout << "\n\t1> Non-template MyBag of integers ";
 	nonTemplateVersion::MyBag numbersList;
 
-
 	do
 	{
 		switch (myBagMenu())
@@ -148,7 +147,7 @@ void nonTemplateSwitch()
 				cout << "\n\t\tMybag contains these sorted integers: ";
 				numbersList.display();
 			}
-			
+
 			break;
 		}
 		case 'F':
@@ -242,7 +241,7 @@ void templateSwitch()
 				cout << "\n\t\tMybag contains these sorted doubles: ";
 				numbersList.display();
 			}
-			
+
 			break;
 		}
 		case 'F':
@@ -599,11 +598,12 @@ void removeBag(MyBag<Course>& courseList)
 			}
 			int searchThis = inputInteger("\n\t\tEnter a student ID to search: ");
 			int index = courseList.at(0).getIDBag().search(searchThis);
+			cout << index;
 			if (index != -1)
 			{
 				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
-				courseList.at(0).remove(index);
-
+				(courseList.atR(0)).remove(index);
+				
 			}
 			else
 			{
@@ -624,7 +624,7 @@ void removeBag(MyBag<Course>& courseList)
 			if (index != -1)
 			{
 				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
-				courseList.at(1).remove(index);
+				courseList.atR(1).remove(index);
 
 			}
 			else
@@ -647,7 +647,7 @@ void removeBag(MyBag<Course>& courseList)
 			if (index != -1)
 			{
 				cout << "\t\tID: " << searchThis << " has been found in Course: " << (courseList.at(0)).getCourseName() << " and has been removed.";
-				courseList.at(2).remove(index);
+				courseList.atR(2).remove(index);
 
 			}
 			else
