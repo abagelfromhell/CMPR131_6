@@ -154,36 +154,6 @@ public:
 	{
 		studentScores.insert(newScore);
 	}
-	//Preconditions : file must hold records for Course class with , delimeter
-	//Postconditions: will read record into Course 
-	void readFile(fstream& file)
-	{
-		string holder;
-
-		getline(file, holder);
-		cout << "\n\t\t" << holder;
-		setCourseName(holder);
-		holder.clear();
-
-		getline(file, holder, ',');
-		cout << "\n\t\t" << holder;
-		studentID.insert(stoi(holder));
-		holder.clear();
-
-		getline(file, holder, ',');
-		cout << "\n\t\t" << holder;
-		studentNames.insert(holder);
-		holder.clear();
-
-		getline(file, holder);
-		cout << "\n\t\t" << holder;
-		studentScores.insert(stod(holder));
-		setGradeLevel(stod(holder));
-		holder.clear();
-
-
-
-	}
 	//Preconditions : Course must have initialized values
 	//Postconditions: Will display course member values
 	void display()
